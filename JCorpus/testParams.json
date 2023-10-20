@@ -1,0 +1,23 @@
+{
+  "Enumerator": {
+    "TypeName": "CalibreLibraryEnumerator",
+    "ConfigurationJson": {
+      "LibraryRoot": "F:\\Ebooks\\MainLibrary",
+      "ExtensionFilters": [
+        "cbz"
+      ],
+      "IdFilters": [
+        "cmoa:*-*"
+      ],
+      "OrderBy": {
+        "Type": "Rating",
+        "Direction": "Descending"
+      }
+    }
+  },
+
+  "Extractor": {
+    "TypeName": "MokuroMangaExtractor",
+    "ConfigurationJson": null
+  }
+}

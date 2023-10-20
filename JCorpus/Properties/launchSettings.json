@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "JCorpus": {
+      "commandName": "Project",
+      "commandLineArgs": "$(SolutionDir)\\.environment"
+    }
+  }
+}
