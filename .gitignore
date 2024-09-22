@@ -2,3 +2,4 @@
 **/bin/
 **/obj/
 /.environment
+JCorpus/Content/Website/node_modules

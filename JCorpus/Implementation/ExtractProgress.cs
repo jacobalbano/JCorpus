@@ -12,7 +12,7 @@ namespace JCorpus.Implementation;
 [AutoDiscover(AutoDiscoverOptions.Singleton, ImplementationFor = typeof(IExtractProgress))]
 internal class ExtractProgress : IExtractProgress, IDisposable
 {
-    public ExtractProgress(Database.ISession session, UniqueId corpusWorkId)
+    public ExtractProgress(Database.ISession session, CorpusWorkId corpusWorkId)
     {
         this.session = session;
         var dbProgress = session.Select<DbExtractProgress>()

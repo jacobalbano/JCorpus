@@ -10,8 +10,8 @@ namespace JCorpus.Persistence.Models;
 
 internal record class DbExtractProgress : ModelBase
 {
-    [Indexed, BsonConverter(typeof(UniqueIdConverter))]
-    public UniqueId CorpusWorkId { get; init; }
+    [Indexed, BsonConverter(typeof(CorpusWorkIdConverter))]
+    public CorpusWorkId CorpusWorkId { get; init; }
 
     public IReadOnlyList<string> Ids { get; init; }
 }

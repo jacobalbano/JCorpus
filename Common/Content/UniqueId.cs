@@ -1,25 +1,40 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Common.Content;
 
-/// <summary>
-/// Strongly-typed string Id. Provides name validation. May be unique within the corpus or within a <see cref="CorpusWork"/>.
-/// </summary>
-public readonly record struct UniqueId
+public abstract record class UniqueIdBase<T> : IComparable<T>, IFormattable where T : UniqueIdBase<T>
 {
-    public string Value { get; }
-
-    public static implicit operator UniqueId(string value) => new(value);
-    public static implicit operator string(UniqueId id) => id.Value;
-    public override int GetHashCode() => Value.GetHashCode();
-    public override string ToString() => Value;
-
-    public UniqueId(string id)
+    private string Value
     {
-        if (validate.IsMatch(id))
-            throw new Exception("Id contains invalid characters");
-        Value = id;
+        get => value;
+        init
+        {
+            if (validate.IsMatch(value))
+                throw new Exception("Id contains invalid characters");
+            this.value = value;
+        }
     }
 
+    int IComparable<T>.CompareTo(T obj) => Value.CompareTo(obj.Value);
+    public UniqueIdBase(string value) => Value = value;
+    public override int GetHashCode() => Value.GetHashCode();
+    public override string ToString() => Value;
+    string IFormattable.ToString(string format, IFormatProvider formatProvider) => Value;
+
+    private readonly string value;
+
     private static readonly Regex validate = new(@"[\r\n|\s]", RegexOptions.Compiled);
+
+    protected abstract class ConverterBase : JsonConverter<T>
+    {
+        protected abstract T Create(string value);
+
+        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            => Create(reader.GetString());
+
+        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+            => writer.WriteStringValue(value.Value);
+    }
 }

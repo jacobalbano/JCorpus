@@ -28,7 +28,7 @@ internal class BoxConverter : JsonConverter<MokuroBoundingBox>
 {
     public static BoxConverter Instance { get; } = new();
 
-    public override MokuroBoundingBox? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override MokuroBoundingBox Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         Debug.Assert(reader.TokenType == JsonTokenType.StartArray);
 
@@ -57,7 +57,7 @@ internal class LineConverter : JsonConverter<MokuroLine>
 {
     public static LineConverter Instance { get; } = new();
 
-    public override MokuroLine? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override MokuroLine Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         Debug.Assert(reader.TokenType == JsonTokenType.StartArray);
         Debug.Assert(reader.Read());
@@ -82,7 +82,7 @@ internal class CoordConverter : JsonConverter<MokuroCoord>
 {
     public static CoordConverter Instance { get; } = new();
 
-    public override MokuroCoord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override MokuroCoord Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         Debug.Assert(reader.TokenType == JsonTokenType.StartArray);
 

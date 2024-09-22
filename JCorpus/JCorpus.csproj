@@ -4,26 +4,23 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="testParams.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="GenHTTP.Api" Version="7.0.0" />
-    <PackageReference Include="GenHTTP.Core" Version="7.0.0" />
-    <PackageReference Include="GenHTTP.Modules.Controllers" Version="7.0.0" />
-    <PackageReference Include="GenHTTP.Modules.SinglePageApplications" Version="7.0.0" />
-    <PackageReference Include="GenHTTP.Modules.Webservices" Version="7.0.0" />
+    <PackageReference Include="GenHTTP.Api" Version="8.5.0" />
+    <PackageReference Include="GenHTTP.Core" Version="8.5.2" />
+    <PackageReference Include="GenHTTP.Modules.Controllers" Version="8.5.0" />
+    <PackageReference Include="GenHTTP.Modules.StaticWebsites" Version="8.5.0" />
+    <PackageReference Include="GenHTTP.Modules.Webservices" Version="8.5.0" />
     <PackageReference Include="LiteDB" Version="5.0.17" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-    <PackageReference Include="Serilog" Version="3.0.1" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="NodaTime" Version="3.1.11" />
+    <PackageReference Include="Serilog" Version="4.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="System.Linq.Async" Version="6.0.1" />
   </ItemGroup>
@@ -34,7 +31,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="testParams.json" />
+	  <EmbeddedResource Include="Content\**\*.*" />
+	  <EmbeddedResource Include="Implementation\WebUi\**\*.*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Remove="Content\Website\jsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Content Remove="Content\Website\jsconfig.json" />
+	<Compile Remove="Content\Website\jsconfig.json" />
+	<EmbeddedResource Remove="Content\Website\jsconfig.json" />
+	<None Remove="Content\Website\jsconfig.json" />
+	<None Remove="Implementation\WebUi\DebugSearch.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Content\Website\components\search\" />
+  </ItemGroup>
 </Project>

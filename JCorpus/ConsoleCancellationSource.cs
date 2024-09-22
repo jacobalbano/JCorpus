@@ -14,7 +14,7 @@ public class ConsoleCancellationSource
         Console.CancelKeyPress += OnCancel;
     }
 
-    private void OnCancel(object? sender, ConsoleCancelEventArgs e)
+    private void OnCancel(object sender, ConsoleCancelEventArgs e)
     {
         logger.LogInformation("Canceling at next opportunity...");
         Console.CancelKeyPress -= OnCancel;
@@ -23,6 +23,5 @@ public class ConsoleCancellationSource
     }
 
     private readonly CancellationTokenSource cts = new();
-    private readonly ILogger<ConsoleCancellationSource> logger;
-    private bool disposed = false;
+    private readonly ILogger logger;
 }

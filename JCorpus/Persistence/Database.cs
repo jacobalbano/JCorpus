@@ -1,7 +1,6 @@
 ﻿using Common.DI;
 using Common.IO;
 using JCorpus.Persistence.Models;
-using JCorpus2;
 using LiteDB;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Utility;
+using Utility.IO;
 
 namespace JCorpus.Persistence;
 

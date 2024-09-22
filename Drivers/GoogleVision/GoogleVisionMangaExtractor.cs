@@ -1,5 +1,6 @@
 ﻿using Common;
 using Common.Content;
+using Common.Addins.Extract;
 using Common.Utility;
 using Google.Cloud.Vision.V1;
 using Microsoft.Extensions.Logging;
@@ -19,18 +20,21 @@ namespace GoogleVision;
 
 public class GoogleVisionMangaExtractor : ICorpusWorkExtractor
 {
-    public ICorpusWorkExtractorContext Extract(CorpusWork work, IExtractProgress progress)
+    public IReadOnlyList<string> InTags => new[] { "CBZ" };
+
+    public ICorpusWorkExtractor.IContext Extract(Stream stream, IExtractProgress progress)
     {
-        return new ExtractorContextImpl(work);
+        return new ExtractorContextImpl(stream);
     }
 
-    private class ExtractorContextImpl : ICorpusWorkExtractorContext
+    private class ExtractorContextImpl : ICorpusWorkExtractor.IContext
     {
         private readonly double confidenceThreshold = 0.4;
 
-        public ExtractorContextImpl(CorpusWork work)
+        public ExtractorContextImpl(Stream stream)
         {
-            this.work = work;
+            throw new NotImplementedException();
+            //this.work = work;
         }
 
         public void Dispose()
@@ -39,11 +43,11 @@ public class GoogleVisionMangaExtractor : ICorpusWorkExtractor
 
         public async IAsyncEnumerable<CorpusEntry> EnumerateEntries([EnumeratorCancellation] CancellationToken ct)
         {
-            using var zip = ZipFile.OpenRead(work.Uri);
+            using var zip = ZipFile.OpenRead(resource.Uri);
             foreach (var entry in zip.Entries.Where(x => isImageFile.IsMatch(x.Name)))
             {
                 using var stream = entry.Open();
-                var result = await ApiCache.Instance.DetectText(work.UniqueId, entry.Name, stream);
+                var result = await ApiCache.Instance.DetectText(resource.UniqueId, entry.Name, stream);
 
                 var furigana = new List<CorpusFurigana>();
                 int blockNum = 0;
@@ -93,7 +97,7 @@ public class GoogleVisionMangaExtractor : ICorpusWorkExtractor
             {
                 if (rubyStart < 0)
                 {
-                    furigana.Add(new(string.Join("", rubyBuffer), scopedUniqueId, rubyStart, sb.Length));
+                    furigana.Add(new(rubyStart, rubyStart + sb.Length, string.Join("", rubyBuffer)));
                     rubyBuffer.Clear();
                     rubyStart = -1;
                 }
@@ -262,11 +266,16 @@ public class GoogleVisionMangaExtractor : ICorpusWorkExtractor
             }
         }
 
-        private CorpusWork work;
+        public IEnumerable<ICorpusContent> GetExtraContent()
+        {
+            yield break;
+        }
+
+        private CorpusWorkResource resource;
     }
 
     private static readonly Regex isImageFile = new(@"\.(png|jpg|jpeg)$", RegexOptions.Compiled);
-    private readonly ILogger<GoogleVisionMangaExtractor> logger;
+    private readonly ILogger logger;
 
     public GoogleVisionMangaExtractor(ILogger<GoogleVisionMangaExtractor> logger)
     {

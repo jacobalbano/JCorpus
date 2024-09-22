@@ -9,8 +9,14 @@ using System.Threading.Tasks;
 
 namespace JCorpus.Persistence.TypeConverters;
 
-internal class UniqueIdConverter : IBsonConverter<UniqueId>
+internal class CorpusEntryIdConverter : IBsonConverter<CorpusEntryId>
 {
-    public UniqueId Deserialize(BsonValue value) => value.AsString;
-    public BsonValue Serialize(UniqueId value) => value.ToString();
+    public CorpusEntryId Deserialize(BsonValue value) => value.AsString;
+    public BsonValue Serialize(CorpusEntryId value) => value.Value;
+}
+
+internal class CorpusWorkIdConverter : IBsonConverter<CorpusWorkId>
+{
+    public CorpusWorkId Deserialize(BsonValue value) => value.AsString;
+    public BsonValue Serialize(CorpusWorkId value) => value.Value;
 }

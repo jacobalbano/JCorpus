@@ -13,7 +13,7 @@ internal class PluginLoadContext : AssemblyLoadContext
 {
     public PluginLoadContext(string pluginPath)
     {
-        resolver = new AssemblyDependencyResolver(pluginPath);
+        resolver = new AssemblyDependencyResolver(this.pluginPath = pluginPath);
     }
 
     protected override Assembly Load(AssemblyName assemblyName)
@@ -24,7 +24,7 @@ internal class PluginLoadContext : AssemblyLoadContext
             if (asm != null)
                 return asm;
         }
-        catch
+        catch (Exception ex)
         {
             // Assembly is not part of the host - load it into the plugin
             string assemblyPath = resolver.ResolveAssemblyToPath(assemblyName);
@@ -45,5 +45,5 @@ internal class PluginLoadContext : AssemblyLoadContext
     }
 
     private readonly AssemblyDependencyResolver resolver;
-
+    private readonly string pluginPath;
 }

@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+	<EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MeCab.DotNet" Version="1.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Utility\Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Jake\.nuget\packages\mecab.dotnet\1.2.0\build\..\content\dic\char.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Jake\.nuget\packages\mecab.dotnet\1.2.0\build\..\content\dic\dicrc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Jake\.nuget\packages\mecab.dotnet\1.2.0\build\..\content\dic\matrix.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Jake\.nuget\packages\mecab.dotnet\1.2.0\build\..\content\dic\README.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Jake\.nuget\packages\mecab.dotnet\1.2.0\build\..\content\dic\sys.dic" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Jake\.nuget\packages\mecab.dotnet\1.2.0\build\..\content\dic\unk.dic" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+{
+  "name": "jcorpus-website",
+  "version": "1.0.0",
+  "description": "JCorpus website module",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jacob Albano",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "eslint": "^9.8.0",
+    "eslint-plugin-react": "^7.35.0",
+    "globals": "^15.9.0"
+  }
+}

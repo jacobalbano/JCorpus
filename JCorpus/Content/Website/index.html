@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="." />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="style/beer.css" rel="stylesheet">
+	<script type="module">
+		import { render } from '/libs/preact.js';
+        import { html } from '/libs/htm.js';
+        import App from '/App.js';
+        render(html`<${App} />`, document.body);
+    </script>
+    <title>JCorpus</title>
+</head>
+<body>
+</html>

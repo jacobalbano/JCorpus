@@ -18,8 +18,8 @@ public enum Status
 
 internal record class DbCorpusWork : ModelBase
 {
-    [Indexed, BsonConverter(typeof(UniqueIdConverter))]
-    public UniqueId CorpusWorkId { get; init; }
+    [Indexed, BsonConverter(typeof(CorpusWorkIdConverter))]
+    public CorpusWorkId CorpusWorkId { get; init; }
 
     public Status Status { get; init; }
 }

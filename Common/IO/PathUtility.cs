@@ -37,6 +37,16 @@ public static class PathUtility
     }
 
     /// <summary>
+    /// Get the qualified path of the directory that contains this <see cref="FilePath"/>.
+    /// </summary>
+    /// <param name="multiPartPath"></param>
+    /// <returns></returns>
+    public static DirectoryPath GetDirectoryPath(this FilePath multiPartPath)
+    {
+        return string.Join(IVirtualFs.PathSeparator, multiPartPath.GetPathParts());
+    }
+
+    /// <summary>
     /// Get only the terminal <see cref="FilePath"/> from a qualified path.
     /// </summary>
     /// <param name="multiPartPath">The (potentially) qualified file path.</param>
@@ -128,7 +138,6 @@ public static class PathUtility
         if (path.Contains('\\')) throw new Exception("All paths must use forward slashes");
         if (path == "." || path == "..") throw new Exception("Relative paths are not allowed");
         if (path.EndsWith(IVirtualFs.PathSeparator)) throw new Exception("Paths cannot end in the path separator");
-        // TODO: potentially allow relative paths as long as they don't leave the root
     }
 
     /// <summary>

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.IO;
+﻿using Common.IO;
+using Utility.IO;
 using OS = System.IO;
 
 namespace JCorpus.Implementation.IO.Filesystem;
 
 internal partial class VirtualFs : IVirtualFs
 {
-    public IVirtualFs? ContainingDirectory { get; }
+    public IVirtualFs ContainingDirectory { get; }
 
     public DirectoryPath DirectoryName { get; }
 
-    public bool IsReadOnly => false;
+    public bool IsReadOnly { get; init; }
 
     public bool Exists => OS.Directory.Exists(this.GetFullyQualifiedPath());
 
@@ -29,7 +25,6 @@ internal partial class VirtualFs : IVirtualFs
         return OS.Directory.EnumerateDirectories(fullPath, IVirtualFs.MatchAllFilesPattern, searchOption)
             .Select(x => x[fullPath.Length..])
             .Select(WindowsPathUtility.MakeDirectoryPath);
-
     }
 
     public IEnumerable<FilePath> EnumerateFiles(string pattern = IVirtualFs.MatchAllFilesPattern, SearchOption searchOption = SearchOption.TopDirectoryOnly)
@@ -60,16 +55,19 @@ internal partial class VirtualFs : IVirtualFs
 
     public void Create()
     {
+        if (IsReadOnly) throw new ReadOnlyFilesystemException();
         OS.Directory.CreateDirectory(this.GetFullyQualifiedPath());
     }
 
     public void Delete()
     {
+        if (IsReadOnly) throw new ReadOnlyFilesystemException();
         OS.Directory.Delete(this.GetFullyQualifiedPath(), true);
     }
 
     private VirtualFs(VirtualFs parentDir, DirectoryPath directory) : this(directory)
     {
         ContainingDirectory = parentDir;
+        IsReadOnly = parentDir.IsReadOnly;
     }
 }

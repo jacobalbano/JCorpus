@@ -28,11 +28,12 @@ public interface IVirtualFs : IVirtualFsObject
     /// <summary>
     /// Seek a subdirectory.
     /// </summary>
-    /// <param name="path">The path to the directory.</param>
+    /// <param name="path">The path to the directory. May contain multiple segments (separated by <see cref="PathSeparator"/>), in which case the resulting object should represent the terminal node and be traversable upwards.</param>
     /// <returns>A <see cref="IVirtualFs"/> representing the requested path. Will not return null, but the directory may not <seealso cref="IVirtualFsObject.Exists">exist</seealso>.</returns>
     IVirtualFs Directory(DirectoryPath path);
 
     /// <summary>Create the directory that this object represents, if it doesn't exist already.</summary>
+    /// <exception cref="ReadOnlyFilesystemException">If the filestem is read-only, this exception will be thrown.</exception>
     void Create();
 
     /// <summary>

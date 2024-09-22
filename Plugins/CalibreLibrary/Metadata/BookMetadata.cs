@@ -13,8 +13,9 @@ namespace CalibreLibrary.Metadata;
 
 public record class BookMetadata(
     byte? Rating,
-    IReadOnlyList<Identifier>? Identifiers,
-    
     [property: JsonConverter(typeof(NodaInstantJsonConverter))]
-    Instant Timestamp
+    Instant Timestamp,
+    string Title,
+    string Authors,
+    IReadOnlyList<Identifier> Identifiers
 );
